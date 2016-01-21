@@ -1,20 +1,20 @@
 mc.create = function(pijdef, qidef=NULL, discrete, infinite){
   if(discrete==TRUE & infinite==FALSE){
-    if(class(pijdef)!="matrix")
-      stop("ERROR: pijdef needs to be a matrix")
+    if(class(pijdef)!="matrix" && all(rowSums(pijdef)==1) && all(pijdef<1))
+      stop("ERROR: pijdef needs to be a matrix with values smaller than 1 and rowSums equal to 1")
     if(nrow(pijdef) != ncol(pijdef))
       stop("ERROR: pijdef needs to be a square matrix")
     mc = list(pijdef=pijdef, qidef=NULL, type = "DF")
     return(mc)
   }
-  
+
   if(discrete==TRUE & infinite==TRUE){
     if(class(pijdef)!="function")
       stop("ERROR: pijdef needs to be a function with input: (i,j) and output: a probability from i to j")
     mc = list(pijdef=pijdef, qidef=NULL, type = "DI")
     return(mc)
   }
-  
+
   if(discrete==FALSE & infinite==FALSE){
     if(class(pijdef)!="matrix")
       stop("ERROR: pijdef needs to be a matrix")
@@ -28,7 +28,7 @@ mc.create = function(pijdef, qidef=NULL, discrete, infinite){
     return(mc)
   }
 
-  
+
   if(discrete==FALSE & infinite==TRUE){
     if(class(pijdef)!="function")
       stop("ERROR: pijdef needs to be a function with input: (i,j) and output: a probability from i to j")
