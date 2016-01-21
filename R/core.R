@@ -1,4 +1,4 @@
-calcPI = function(mc.obj){
+calcPI = function(mc.obj, epsilon = 0.01){
   if(mc.obj$type == "DF"){
     p = mc.obj$pijdef
     n = nrow(p)
@@ -9,7 +9,46 @@ calcPI = function(mc.obj){
   }
   
   if(mc.obj$type == "DI"){
-    warning("under construction")
+    k1=10
+    k2=20
+    
+    p1 = getProb(1,k1, mc.obj) 
+    n1 = nrow(p1)
+    imp1 = diag(n1) - t(p1)
+    imp1[n1, ] = rep(1, n1)
+    rhs1 = c(rep(0, n1-1), 1)
+    ans1 = solve(imp1,rhs1)
+    
+    p2 = getProb(1,k2, mc.obj) 
+    n2 = nrow(p2)
+    imp2 = diag(n2) - t(p2)
+    imp2[n2, ] = rep(1, n2)
+    rhs2 = c(rep(0, n2-1), 1)
+    ans2 = solve(imp2, rhs2)
+    
+    meanDiff = mean(ans1 - ans2[1:k1])
+    
+    while(meanDiff > epsilon){
+      k1 = k1*2
+      k2 = k2*2
+      
+      p1 = getProb(1,k1, mc.obj) 
+      n1 = nrow(p1)
+      imp1 = diag(n1) - t(p1)
+      imp1[n1, ] = rep(1, n1)
+      rhs1 = c(rep(0, n1-1), 1)
+      ans1 = solve(imp1,rhs1)
+      
+      p2 = getProb(1,k2, mc.obj) 
+      n2 = nrow(p2)
+      imp2 = diag(n2) - t(p2)
+      imp2[n2, ] = rep(1, n2)
+      rhs2 = c(rep(0, n2-1), 1)
+      ans2 = solve(imp2, rhs2)
+      
+      meanDiff = mean(ans1 - ans2[1:k1])
+    }
+    return(ans2)
   }
   
   if(mc.obj$type == "CF"){
