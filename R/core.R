@@ -47,3 +47,52 @@ calcHit = function(i=NULL, j=NULL, mc.obj){
   }
   
 }
+
+
+
+getProb = function(start, end, mc.obj){
+  pijdef = mc.obj$pijdef
+  type = mc.obj$type
+  n = length(start:end)
+  if(type=="DI"){
+    mat = matrix(0, nrow = n, ncol = n)
+    for(i in c(1:n)){
+      for(j in c(1:n)){
+        mat[i,j] = pijdef(i,j)
+      }
+    }
+    if(matCheck(mat) == "NOT PASS"){
+      stop("ERROR: incorrect pijdef function")
+    }
+    return(mat)
+  }
+  
+  if(type=="CI"){
+    mat = matrix(0, nrow = n, ncol = n)
+    rates = numeric(n)
+    for(i in c(1:n)){
+      for(j in c(1:n)){
+        ans = pijdef(i,j)
+        mat[i,j] = ans[[1]]
+        rates[i] = ans[[2]]
+      }
+    }
+    if(matCheck(mat) == "NOT PASS")
+      stop("ERROR: incorrect pijdef definition")
+    if(ratesCheck(rates) == "NOT PASS")
+      stop("ERROR: incorrect qidef definition")
+    return(mat)
+  }
+}
+
+matCheck = function(mat){
+  if(sum(mat<0))
+    return("NOT PASS")
+  if(sum(mat>1))
+    return("NOT PASS")
+  return("PASS")
+}
+ratesCheck = function(rates){
+  if(sum(rates) >1)
+    return("NOT PASS")
+}
