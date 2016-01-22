@@ -5,7 +5,12 @@ mc.create = function(pijdef, states, qidef=NULL, discrete=TRUE, infinite=FALSE, 
     if(nrow(pijdef) != ncol(pijdef))
       stop("ERROR: pijdef needs to be a square matrix")
     if(missing(states))
-      states = LETTERS[1:dim(pijdef)[1]]
+    {
+      if(is.null(dimnames(pijdef)))
+        states = LETTERS[1:dim(pijdef)[1]]
+      else
+        states = dimnames(pijdef)[[1]]
+    }
     mc = list(pijdef=pijdef, states=states,qidef=NULL, type = "DF", name = name)
     return(structure(mc,class=c('DFMKT','MKT')))
   }
@@ -31,7 +36,6 @@ mc.create = function(pijdef, states, qidef=NULL, discrete=TRUE, infinite=FALSE, 
     mc = list(pijdef=pijdef, states=states, qidef=qidef, type = "CF")
     return(mc)
   }
-
 
   if(discrete==FALSE & infinite==TRUE){
     if(class(pijdef)!="function")
