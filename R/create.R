@@ -1,11 +1,13 @@
-mc.create = function(pijdef, qidef=NULL, discrete, infinite){
+mc.create = function(pijdef, states, qidef=NULL, discrete=TRUE, infinite=FALSE, name=NULL){
   if(discrete==TRUE & infinite==FALSE){
     if(class(pijdef)!="matrix" && all(rowSums(pijdef)==1) && all(pijdef<1))
       stop("ERROR: pijdef needs to be a matrix with values smaller than 1 and rowSums equal to 1")
     if(nrow(pijdef) != ncol(pijdef))
       stop("ERROR: pijdef needs to be a square matrix")
-    mc = list(pijdef=pijdef, qidef=NULL, type = "DF")
-    return(mc)
+    if(missing(states))
+      states = LETTERS[1:dim(pijdef)[1]]
+    mc = list(pijdef=pijdef, states=states,qidef=NULL, type = "DF", name = name)
+    return(structure(mc,class=c('DFMKT','MKT')))
   }
 
   if(discrete==TRUE & infinite==TRUE){
@@ -16,15 +18,17 @@ mc.create = function(pijdef, qidef=NULL, discrete, infinite){
   }
 
   if(discrete==FALSE & infinite==FALSE){
-    if(class(pijdef)!="matrix")
-      stop("ERROR: pijdef needs to be a matrix")
+    if(class(pijdef)!="matrix" && all(rowSums(pijdef)==1) && all(pijdef<1))
+      stop("ERROR: pijdef needs to be a matrix with values smaller than 1 and rowSums equal to 1")
     if(class(qidef)!="numeric" & class(qidef)!="integer")
       stop("ERROR: qidef needs to be a numerical vector")
     if(nrow(pijdef) != ncol(pijdef))
       stop("ERROR: pijdef needs to be a square matrix")
     if(nrow(pijdef) != length(qidef))
       stop("ERROR: numbers of stages from pijdef and qijdef need to agree")
-    mc = list(pijdef=pijdef, qidef=qidef, type = "CF")
+    if(missing(states))
+      states = LETTERS[1:dim(pijdef)[1]]
+    mc = list(pijdef=pijdef, states=states, qidef=qidef, type = "CF")
     return(mc)
   }
 
@@ -38,3 +42,4 @@ mc.create = function(pijdef, qidef=NULL, discrete, infinite){
     return(mc)
   }
 }
+
