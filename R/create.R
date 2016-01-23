@@ -5,6 +5,7 @@ mc.create = function(pijdef, qidef=NULL, discrete, infinite){
     if(nrow(pijdef) != ncol(pijdef))
       stop("ERROR: pijdef needs to be a square matrix")
     mc = list(pijdef=pijdef, qidef=NULL, type = "DF")
+    structure(mc, class=c("mc", "matrix"))
     return(mc)
   }
   
@@ -12,6 +13,7 @@ mc.create = function(pijdef, qidef=NULL, discrete, infinite){
     if(class(pijdef)!="function")
       stop("ERROR: pijdef needs to be a function with input: (i,j) and output: a probability from i to j")
     mc = list(pijdef=pijdef, qidef=NULL, type = "DI")
+    structure(mc, class=c("mc", "matrix"))
     return(mc)
   }
   
@@ -25,6 +27,7 @@ mc.create = function(pijdef, qidef=NULL, discrete, infinite){
     if(nrow(pijdef) != length(qidef))
       stop("ERROR: numbers of stages from pijdef and qijdef need to agree")
     mc = list(pijdef=pijdef, qidef=qidef, type = "CF")
+    structure(mc, class=c("mc", "matrix"))
     return(mc)
   }
 
@@ -35,6 +38,7 @@ mc.create = function(pijdef, qidef=NULL, discrete, infinite){
     if(class(qidef)!="function")
       stop("ERROR: qidef needs to be a function which input: i and output: the lamda of the holding time")
     mc = list(pijdef=pijdef, qidef=qidef, type = "CI")
+    structure(mc, class=c("mc", "matrix"))
     return(mc)
   }
 }
