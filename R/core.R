@@ -64,6 +64,9 @@ getSteadyStates = function(mc.obj, epsilon = 0.01){
 }
 
 calcHit = function(i=NULL, j=NULL, mc.obj){
+  if(!check.irreducible(mc.obj))
+    stop("Since this Markov chain is not irreducible, hitting time can't be computed")
+
   if(mc.obj$type == "DF"){
     p = mc.obj$pijdef
     n = nrow(p)
