@@ -1,4 +1,13 @@
 export(mc.create)
-export(calcPI)
-
-
+export(getSteadyStates)
+export(print.DFMKT)
+export(summary.DFMKT)
+export(plot.DFMKT)
+export(check.accessible)
+export(check.irreducible)
+export(getAbsorbingStates)
+export(getTransientStates)
+export(getCommunicatingClasses)
+export(fitMarkovchain)
+export(generateMarkovchain)
+export(getConditionalDistribution)

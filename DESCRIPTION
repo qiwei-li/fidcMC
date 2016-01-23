@@ -1,8 +1,10 @@
 Package: infiniteMC
 Title:  Markov Chain Toolkit in both finite and infinite stage settings
-Description: Toolkit for analyzing DTMC (discrete-time Markov chain) and 
+Description: Toolkit for analyzing DTMC (discrete-time Markov chain) and
 	CTMC (continuous-time Markov chain) in both finite and infinite stage settings
 Version: 0.1-0
 License: MIT + file LICENSE
-Author: Bingxi Li, Qiwei Li, Jiaping Zhang 
+Author: Bingxi Li, Qiwei Li, Jiaping Zhang
 Maintainer: Qiwei Li  <qwli@ucdavis.edu>
+Imports:
+    markovchain
