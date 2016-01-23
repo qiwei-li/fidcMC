@@ -14,17 +14,15 @@ mc.create = function(pijdef, stateNames=NULL, chainName=NULL, qidef=NULL, discre
       else
         stateNames = dimnames(pijdef)[[1]]
     }
-    mc = list(pijdef=pijdef, stateNames=stateNames, chainName=chainName)
-    structure(mc, class=c("DFmc","mc", "list"))
-    return(mc)
+    obj = structure(list(pijdef=pijdef, stateNames=stateNames, chainName=chainName), class=c("DFmc","mc", "list"))
+    return(obj)
   }
 
   if(discrete==TRUE & infinite==TRUE){
     if(class(pijdef)!="function")
       stop("ERROR: pijdef needs to be a function with input: (i,j) and output: a probability from i to j")
-    mc = list(pijdef=pijdef, chainName=chainName)
-    structure(mc, class=c("DImc","mc", "list"))
-    return(mc)
+    obj = structure(list(pijdef=pijdef, chainName=chainName), class=c("DImc","mc", "list"))
+    return(obj)
   }
 
   if(discrete==FALSE & infinite==FALSE){
@@ -46,9 +44,8 @@ mc.create = function(pijdef, stateNames=NULL, chainName=NULL, qidef=NULL, discre
       else
         stateNames = dimnames(pijdef)[[1]]
     }
-    mc = list(pijdef=pijdef, qidef=qidef, stateNames=stateNames, chainName=chainName)
-    structure(mc, class=c("CFmc","mc", "list"))
-    return(mc)
+    obj = structure(list(pijdef=pijdef, qidef=qidef, stateNames=stateNames, chainName=chainName), class=c("CFmc","mc", "list"))
+    return(obj)
   }
 
   if(discrete==FALSE & infinite==TRUE){
@@ -56,8 +53,7 @@ mc.create = function(pijdef, stateNames=NULL, chainName=NULL, qidef=NULL, discre
       stop("ERROR: pijdef needs to be a function with input: (i,j) and output: a probability from i to j")
     if(class(qidef)!="function")
       stop("ERROR: qidef needs to be a function which input: i and output: the lamda of the holding time")
-    mc = list(pijdef=pijdef, qidef=qidef, chainName=chainName)
-    structure(mc, class=c("CImc","mc", "list"))
-    return(mc)
+    obj = structure(list(pijdef=pijdef, qidef=qidef, chainName=chainName), class=c("CImc","mc", "list"))
+    return(obj)
   }
 }
