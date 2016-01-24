@@ -1,8 +1,22 @@
 export(mc.create)
-export(getSteadyStates)
-export(print.DFMKT)
-export(summary.DFMKT)
-export(plot.DFMKT)
+
+export(getStationaryDistribution)
+S3method(getStationaryDistribution, DFmc)
+S3method(getStationaryDistribution, DImc)
+S3method(getStationaryDistribution, CFmc)
+S3method(getStationaryDistribution, CImc)
+
+export(getHittingTime)
+S3method(getHittingTime, DFmc)
+S3method(getHittingTime, DImc)
+S3method(getHittingTime, CFmc)
+S3method(getHittingTime, CImc)
+
+import(markovchain)
+
+export(print.DFmc)
+export(summary.DFmc)
+export(plot.DFmc)
 export(check.accessible)
 export(check.irreducible)
 export(getAbsorbingStates)

@@ -1,53 +1,64 @@
+# extra functions
+getInfinitesimalGenerator = function(p, lamda){
+  n = nrow(p)
+  Q = matrix(0, nrow=n, ncol=n)
+  for(i in 1:n){
+    for(j in 1:n){
+      Q[i,j] = lamda[j]*p[j,i]
+    }
+  }
+  diag(Q) = -lamda
+  return(Q)
+}
+
 #Useful helper functions integrated from the "markovchain" package
 
 print <- function(mcObj) UseMethod("print", mcObj)
-print.DFMKT <- function(mc)
-{
-  mc.s4 = new('markovchain',transitionMatrix=mc$pijdef,states=mc$states, name = '')
+print.DFmc <- function(mc){
+  mc.s4 = new('markovchain',transitionMatrix=mc$pijdef,states=mc$stateNames, name = '')
   mc.s4
 }
 
 summary <- function(mcObj) UseMethod("summary", mcObj)
-summary.DFMKT <- function(mc)
-{
-  mc.s4 = new('markovchain',transitionMatrix=mc$pijdef,states=mc$states, name = '')
+summary.DFmc <- function(mc){
+  mc.s4 = new('markovchain',transitionMatrix=mc$pijdef,states=mc$stateNames, name = '')
   markovchain::summary(mc.s4)
 }
 
 plot <- function(mcObj) UseMethod("plot", mcObj)
-plot.DFMKT <- function(mc)
+plot.DFmc <- function(mc)
 {
-  mc.s4 = new('markovchain',transitionMatrix=mc$pijdef,states=mc$states)
+  mc.s4 = new('markovchain',transitionMatrix=mc$pijdef,states=mc$stateNames)
   markovchain::plot(mc.s4)
 }
 
 check.accessible <- function(mc, from, to)
 {
-  mc.s4 = new('markovchain',transitionMatrix=mc$pijdef,states=mc$states)
+  mc.s4 = new('markovchain',transitionMatrix=mc$pijdef,states=mc$stateNames)
   markovchain::is.accessible(mc.s4, from=from, to=to)
 }
 
 check.irreducible <- function(mc)
 {
-  mc.s4 = new('markovchain',transitionMatrix=mc$pijdef,states=mc$states)
+  mc.s4 = new('markovchain',transitionMatrix=mc$pijdef,states=mc$stateNames)
   markovchain::is.irreducible(mc.s4)
 }
 
 getAbsorbingStates <- function(mc)
 {
-  mc.s4 = new('markovchain',transitionMatrix=mc$pijdef,states=mc$states)
+  mc.s4 = new('markovchain',transitionMatrix=mc$pijdef,states=mc$stateNames)
   markovchain::absorbingStates(mc.s4)
 }
 
 getTransientStates <- function(mc)
 {
-  mc.s4 = new('markovchain',transitionMatrix=mc$pijdef,states=mc$states)
+  mc.s4 = new('markovchain',transitionMatrix=mc$pijdef,states=mc$stateNames)
   markovchain::transientStates(mc.s4)
 }
 
 getCommunicatingClasses <- function(mc)
 {
-  mc.s4 = new('markovchain',transitionMatrix=mc$pijdef,states=mc$states)
+  mc.s4 = new('markovchain',transitionMatrix=mc$pijdef,states=mc$stateNames)
   markovchain::communicatingClasses(mc.s4)
 }
 

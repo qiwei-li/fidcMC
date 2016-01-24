@@ -1,4 +1,4 @@
-mc.create = function(pijdef, stateNames=NULL, chainName=NULL, qidef=NULL, discrete=TRUE, infinite=FALSE){
+mc.create = function(pijdef, stateNames=NULL, chainName=NULL, qidef=NULL, discrete, infinite){
   if(discrete==TRUE & infinite==FALSE){
     if(class(pijdef)!="matrix")
       stop("ERROR: pijdef needs to be a matrix")
@@ -8,7 +8,7 @@ mc.create = function(pijdef, stateNames=NULL, chainName=NULL, qidef=NULL, discre
       stop("ERROR: pijdef needs to contain values >= 0")
     if(sum(pijdef>1))
       stop("ERROR: pijdef needs to contain values <= 1")
-    if(stateNames == NULL){
+    if(is.null(stateNames)){
       if(is.null(dimnames(pijdef)))
         stateNames = c(1:nrow(pijdef))
       else
@@ -38,7 +38,7 @@ mc.create = function(pijdef, stateNames=NULL, chainName=NULL, qidef=NULL, discre
       stop("ERROR: qidef needs to be a numerical vector")
     if(nrow(pijdef) != length(qidef))
       stop("ERROR: numbers of stages from pijdef and qijdef need to agree")
-    if(stateNames == NULL){
+    if(is.null(stateNames)){
       if(is.null(dimnames(pijdef)))
         stateNames = c(1:nrow(pijdef))
       else
