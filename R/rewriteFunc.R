@@ -62,12 +62,24 @@ getCommunicatingClasses <- function(mc)
   markovchain::communicatingClasses(mc.s4)
 }
 
-fitMarkovchain <- function(data_seq, method = "mle", byrow = TRUE, nboot = 10L,
+getRecurrentClasses <- function(mc)
+{
+  mc.s4 = new('markovchain',transitionMatrix=mc$pijdef,states=mc$stateNames)
+  markovchain::recurrentClasses(mc.s4)
+}
+
+getPeriod <- function(mc)
+{
+  mc.s4 = new('markovchain',transitionMatrix=mc$pijdef,states=mc$stateNames)
+  markovchain::period(mc.s4)
+}
+
+fitDiscreteMarkovchain <- function(data_seq, method = "mle", byrow = TRUE, nboot = 10L,
                            laplacian = 0, name = "", parallel = FALSE,
                            confidencelevel = 0.95, hyperparam = matrix())
 {
   #Given a sequence of states arising from a stationary state, it fits the underlying Markov chain dis- tribution using either MLE (also using a Laplacian smoother), bootstrap or by MAP (Bayesian) inference.
-  markovchain::markovchainFit(date = data_seq, method = method, byrow = byrow, nboot = nroot,
+  markovchain::markovchainFit(data = data_seq, method = method, byrow = byrow, nboot = nboot,
                               laplacian = laplacian, name = name, parallel = parallel,
                               confidencelevel = confidencelevel, hyperparam = hyperparam)
 }
@@ -75,14 +87,23 @@ fitMarkovchain <- function(data_seq, method = "mle", byrow = TRUE, nboot = 10L,
 generateMarkovchain <- function(n,mc)
 {
   #Provided any markovchain or markovchainList objects, it returns a sequence of states coming from the underlying stationary distribution.
-  mc.s4 = new('markovchain',transitionMatrix=mc$pijdef,states=mc$states)
+  mc.s4 = new('markovchain',transitionMatrix=mc$pijdef,states=mc$stateNames)
   markovchain::rmarkovchain(n=n, object=mc.s4)
 }
 
+#' It extracts the conditional distribution of the subsequent state, given current state.
+#'
+#' @param mc  mc class.
+#' @param state char.
+#' @return The conditional distribution for each subsequent state.
+#' @examples
+#' statesNames=c("a","b","c")
+#' markovB<- mc.create(matrix(c(0.2,0.5,0.3,0,1,0,0.1,0.8,0.1),nrow=3, byrow=TRUE, dimnames=list(statesNames,statesNames)),discrete = T,infinite = F)
+#' getConditionalDistribution(markovB,"b")
 getConditionalDistribution <- function(mc,state)
 {
   #It extracts the conditional distribution of the subsequent state, given current state.
-  mc.s4 = new('markovchain',transitionMatrix=mc$pijdef,states=mc$states)
+  mc.s4 = new('markovchain',transitionMatrix=mc$pijdef,states=mc$stateNames)
   markovchain::conditionalDistribution(object=mc.s4,state=state)
 }
 
