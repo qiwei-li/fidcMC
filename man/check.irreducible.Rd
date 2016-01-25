@@ -18,6 +18,7 @@ mc class object
 }
 \value{
 A boolean value
+}
 \references{
 markovchain CRAN package
 }
