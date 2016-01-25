@@ -2,7 +2,7 @@ getStationaryDistribution = function(mc.obj, epsilon = 0.01, iteration=10){
   UseMethod("getStationaryDistribution", mc.obj)
 }
 
-getStationaryDistribution.DFmc = function(mc.obj){
+getStationaryDistribution.DFmc = function(mc.obj, epsilon = 0.01, iteration=10){
   p = mc.obj$pijdef
   n = nrow(p)
   imp = diag(n) - t(p)
@@ -55,7 +55,7 @@ getStationaryDistribution.DImc = function(mc.obj, epsilon = 0.01, iteration=10){
   return(list("Success",  k2, ans2, p2))
 }
 
-getStationaryDistribution.CFmc = function(mc.obj){
+getStationaryDistribution.CFmc = function(mc.obj, epsilon = 0.01, iteration=10){
   p = mc.obj$pijdef
   lamda = mc.obj$qidef
   q = getInfinitesimalGenerator(p, lamda)
@@ -66,6 +66,6 @@ getStationaryDistribution.CFmc = function(mc.obj){
   return(pi)
 }
 
-getStationaryDistribution.CImc = function(mc.obj){
+getStationaryDistribution.CImc = function(mc.obj, epsilon = 0.01, iteration=10){
   
 }

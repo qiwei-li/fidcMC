@@ -28,6 +28,6 @@ mat = matrix(c(0.2,0.5,0.3,
                    0,1,0,
                    0.1,0.8,0.1),nrow=3, byrow=TRUE, dimnames=list(statesNames,statesNames)
 )
-mc.test = mc.create(mat,discrete=T,infinite=F)
+mc.test = mc.create(mat,discrete=TRUE, infinite=FALSE)
 check.irreducible(mc.test)
 }

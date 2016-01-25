@@ -13,21 +13,23 @@ getInfinitesimalGenerator = function(p, lamda){
 
 #Useful helper functions integrated from the "markovchain" package
 
-print <- function(mcObj) UseMethod("print", mcObj)
-print.DFmc <- function(mc){
+#print <- function(mcObj) UseMethod("print", mcObj)
+print.DFmc <- function(x, ...){
+  mc = x
   mc.s4 = new('markovchain',transitionMatrix=mc$pijdef,states=mc$stateNames, name = '')
   mc.s4
 }
 
-summary <- function(mcObj) UseMethod("summary", mcObj)
-summary.DFmc <- function(mc){
+#summary <- function(mcObj) UseMethod("summary", mcObj)
+summary.DFmc <- function(object, ...){
+  mc = object
   mc.s4 = new('markovchain',transitionMatrix=mc$pijdef,states=mc$stateNames, name = '')
   markovchain::summary(mc.s4)
 }
 
-plot <- function(mcObj) UseMethod("plot", mcObj)
-plot.DFmc <- function(mc)
-{
+#plot <- function(mcObj) UseMethod("plot", mcObj)
+plot.DFmc <- function(x, ...){
+  mc = x
   mc.s4 = new('markovchain',transitionMatrix=mc$pijdef,states=mc$stateNames)
   markovchain::plot(mc.s4)
 }

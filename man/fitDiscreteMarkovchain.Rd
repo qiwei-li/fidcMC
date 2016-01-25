@@ -23,7 +23,8 @@ A character list
 \item{method}{Method used to estimate the Markov chain. Either "mle", "map", "bootstrap" or "laplace"}
 \item{byrow}{it tells whether the output Markov chain should show the transition probabilities by row.}
 \item{nboot}{Number of bootstrap replicates in case "bootstrap" is used.}
-\item{laplaxian}{Laplacian smoothing parameter, default zero. It is only used when "laplace" method is chosen.}
+\item{laplacian}{Laplacian smoothing parameter, default zero. It is only used when "laplace" method is chosen.}
+\item{parallel}{Boolean. Whether to use parallel computing}
 \item{name}{Optional character for name slot.}
 \item{confidencelevel}{level for conficence intervals width. Used only when method equal to "mle".}
 \item{hyperparam}{Hyperparameter matrix for the a priori distribution. If none is provided, default value of 1 is assigned to each parameter. This must be of size kxk where k is the number of states in the chain and the values should typically be non-negative integers.}
