@@ -32,9 +32,11 @@ singleServer = function(i,j){
 }
 ex = mc.create(pijdef=singleServer, discrete=TRUE, infinite=TRUE)
 ans = getStationaryDistribution(ex)
-if(round(ans[[3]][1:5]) != c(0.0618, 0.0883, 0.0996, 0.1045, 0.1065))
+if(sum(round(ans[[3]][1:5],4) != c(0.0297,0.0424,0.0479,0.0502,0.0512)))
    stop("DI method is wrong")
-
+ans = getHittingTime(mc.obj = ex)
+if(sum(round(ans[1, 2:5], 4) != c(1.0000, 1.6456, 2.0345, 2.2555)))
+  stop("DI method is wrong")
 
 # testing for continuous finite case
 machineRepair = function(){

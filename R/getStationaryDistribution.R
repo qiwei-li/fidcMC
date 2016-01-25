@@ -52,7 +52,7 @@ getStationaryDistribution.DImc = function(mc.obj, epsilon = 0.01, iteration=10){
     ans2 = solve(imp2, rhs2)
     cosineDiff = 1-cosine(ans1, ans2[1:k1])
   }
-  return(list("Success",  k2, ans2))
+  return(list("Success",  k2, ans2, p2))
 }
 
 getStationaryDistribution.CFmc = function(mc.obj){

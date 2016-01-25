@@ -13,6 +13,7 @@ S3method(getHittingTime, CFmc)
 S3method(getHittingTime, CImc)
 
 import(markovchain)
+import(lsa)
 
 export(print.DFmc)
 export(summary.DFmc)

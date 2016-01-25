@@ -10,7 +10,7 @@ mc.create = function(pijdef, stateNames=NULL, chainName=NULL, qidef=NULL, discre
       stop("ERROR: pijdef needs to contain values <= 1")
     if(is.null(stateNames)){
       if(is.null(dimnames(pijdef)))
-        stateNames = c(1:nrow(pijdef))
+        stateNames = as.character(c(1:nrow(pijdef)))
       else
         stateNames = dimnames(pijdef)[[1]]
     }
@@ -40,7 +40,7 @@ mc.create = function(pijdef, stateNames=NULL, chainName=NULL, qidef=NULL, discre
       stop("ERROR: numbers of stages from pijdef and qijdef need to agree")
     if(is.null(stateNames)){
       if(is.null(dimnames(pijdef)))
-        stateNames = c(1:nrow(pijdef))
+        stateNames = as.character(c(1:nrow(pijdef)))
       else
         stateNames = dimnames(pijdef)[[1]]
     }
