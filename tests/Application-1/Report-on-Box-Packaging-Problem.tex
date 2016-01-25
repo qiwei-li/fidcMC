@@ -1,0 +1,344 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{fullpage}
+\usepackage{amsmath}
+\usepackage{listings}
+
+\title{ECS 256 Homework 1.1}
+\author{Bingxi Li, Qiwei Li, Jiaping Zhang\footnotetext{bxli@ucdavis.edu, qwli@ucdavis.edu, jpzhang@ucdavis.edu} \\ University of California, Davis}
+\date{January 2016}
+
+\begin{document}
+
+\maketitle
+
+\section{The Problem}
+Items come in that need to be packed in boxes, in order of arrival. The maximum allowable weight per box is $W_{max}$; if an item would cause a box to go overweight, a new box must be started.
+\bigskip
+The weights $W_1, W_2, W_3,...$ of the items are independent and identically distributed (i.i.d.) with some distribution on ${1,2,...,w_{max}}$. Let Xn denote the total weight of items in the current box at "time" n, i.e. after the nth item has been packed. Due to the i.i.d. assumption, the $X_n$ obey the Markov property.
+\bigskip
+Do the following, with $\pi$ denoting the stationary distribution of the chain:
+
+
+$\bullet$ Derive an expression for the long-run mean number of items per box in terms of $\pi$.
+
+$\bullet$ Derive an expression for the long-run mean weight per box in terms of $\pi$.
+
+$\bullet$ Let Q denote the weight of the first item put into any box. Derive an expression for the probability mass function of Q, i.e. the values P(Q = i), i = 1,2,...,r in terms of $\pi$.
+
+$\bullet$ Take $w_{max}$ to be 10, and P(W = i) = ci/10, i = 1,2,...,10 for suitable c, i.e. the c that makes the probabilities sum to1. Find the values of the above expressions, and check via simulation.
+
+
+
+\textbf{Notation: }
+
+The weight of items $W_1, W_2, W_3,\dots, W_n$ are independent and identically distributed on $\{1,2,3,\dots,w_{max}\}$ with probability being:
+\begin{equation}
+    I_i=P(w=i)\ \ \ for\ i\ in\ (1,2,3,\dots,w_{max})
+\end{equation}
+
+The average weight of item, $\bar{w}$ is:
+\begin{equation}
+    \overline{w}=\sum_{i=1}^{w_{max}} I_i \cdot i
+\end{equation}
+
+The maximum weight is $w_{max}$. When the box have weight $w_i$ at $n\ th$ state and $w_j$ at $n+1\ th$ state, the transition probability between the two states is defined as the $P_{ij}$ for $i,j\in \{1,2,3,...,w_{max}\}$. Note that when computing each $P_{ij}$, we should consider two possible transitions: 1.the new item can be put in the current box; 2. the new item has to be put into a new box. Then we define the transition matrix P:
+
+\[
+\begin{Vmatrix}
+0 & I_1 & I_2 & \dots & I_{{\frac{w_{max}}{2}}-2} & I_{{\frac{w_{max}}{2}}-1} & I_{{\frac{w_{max}}{2}}} &\cdots & I_{w_{max}-2} & I_{w_{max}-1}+I_{w_{max}}\\
+0 & 0 & I_1 & \dots & I_{{\frac{w_{max}}{2}}-3} & I_{{\frac{w_{max}}{2}}-2} & I_{{\frac{w_{max}}{2}}-1} &\cdots & I_{w_{max}-3}+I_{w_{max}-1} & I_{w_{max}-2}+I_{w_{max}}\\
+0 & 0 & 0 & \dots & I_{{\frac{w_{max}}{2}}-4} & I_{{\frac{w_{max}}{2}}-3} & I_{{\frac{w_{max}}{2}}-2} &\cdots & I_{w_{max}-4}+I_{w_{max}-1} & I_{w_{max}-3}+I_{w_{max}}\\
+\vdots & \vdots & \vdots & \ddots & \vdots & \vdots & \vdots & \cdots & \vdots & \vdots\\
+0 & 0 & 0 & \dots & 0 & I_1 & I_2 &\cdots & I_{\frac{w_{max}}{2}}+I_{w_{max}-1} & I_{\frac{w_{max}}{2}+1}+I_{w_{max}}\\
+0 & 0 & 0 & \dots & 0 & 0 & I_1+I_{\frac{w_{max}}{2}+1} &\cdots & I_{\frac{w_{max}}{2}-1}+I_{w_{max}-1} & I_{\frac{w_{max}}{2}}+I_{w_{max}}\\
+0 & 0 & 0 & \dots & I_{\frac{w_{max}}{2}-1} & I_{\frac{w_{max}}{2}} & 0 &\cdots & I_{\frac{w_{max}}{2}-2}+I_{w_{max}-1} & I_{\frac{w_{max}}{2}-1}+I_{w_{max}}\\
+\vdots & \vdots & \vdots & \ddots & \vdots & \vdots & \vdots & \cdots & \vdots & \vdots\\
+0 & I_2 & I_3 & \dots & I_{\frac{w_{max}}{2}-1} & I_{\frac{w_{max}}{2}} & I_{\frac{w_{max}}{2}+1}  &\cdots & I_{w_{max}-1} & I_1+I_{w_{max}}\\
+I_1 & I_2 & I_3 & \dots & I_{\frac{w_{max}}{2}-1} & I_{\frac{w_{max}}{2}} & I_{\frac{w_{max}}{2}+1}  &\cdots & I_{w_{max}-1} & I_{w_{max}}\\
+\end{Vmatrix}
+\]
+
+With the matrix P, we can derive the stationary distribution of box's weight on the Markov Chain,
+\begin{equation}
+\pi=[\pi_{1},\pi_{2},\pi_{3},\cdots,\pi_i,\cdots,\pi_{w_{max}-1},\pi_{w_{max}}]
+\end{equation}
+
+where the $\pi_i$ represents the stationary probability for total weight being i in current box.
+
+Suppose the final weight for a box is $i$, the next coming item's weight beyond the remaining capacity of current box can be denoted as $w_{max}-i+1,w_{max}-i+2,\dots,w_{max}$. Thus the probability of using a new box to accommodate the new item can be expressed as 
+
+The relative probability of different final weights in a box is 
+\begin{equation}
+    p(w_{box}=i)=\pi_i\cdot(\sum_{j=w_{max}-i+1}^{w_{max}}I_j)
+\end{equation}
+
+where the $\pi_i$ is the probability of current box's weight being i and $\sum_{j=w_{max}-i+1}^{w_{max}}I_j$ is probability that the coming item's weight j is beyond the remaining capacity of current box. The latter is namely the probability of using a new box to accommodate the new item, which means the weight of current box would be unchanged. 
+
+The relative probability of different final weights in a box is, 
+\begin{equation}
+    p_i=\frac{\pi_i\cdot(\sum_{j=w_{max}-i+1}^{w_{max}}I_j)}{\sum_{i=1}^{w_{max}}\pi_i\cdot(\sum_{j=w_{max}-i+1}^{w_{max}}I_j)}
+\end{equation}
+
+Thus the average weight per box is:
+\begin{equation}
+    \overline{w}_{box}=\sum_{i=1}^{w_{max}}i\cdot p_i = \sum_{i=1}^{w_{max}}i\cdot\frac{\pi_i\cdot(\sum_{j=w_{max}-i+1}^{w_{max}}I_j)}{\sum_{i=1}^{w_{max}}\pi_i\cdot(\sum_{j=w_{max}-i+1}^{w_{max}}I_j)} 
+\end{equation}
+
+\subsection{Mean Number of Items}
+\indent The average number of items in a box, $\overline{N}$, can be evaluated by dividing the average weight of box with the average weigh of item,
+\begin{equation}
+    \overline{N}=\frac{\overline{w}_{box}}{\overline{w}}
+\end{equation}
+\subsection{Mean Weight of Box}
+The weight of a box has already been derived with fomula 5.
+
+\subsection{Probability Mass Function of First Item Weight}
+\indent The weight of first item in a box is denoted with Q. By applying the ``Law of Total Probability", the weight of first item being i into any box can be expressed as the probability sum of the events in which the final weight of its previous box is j:
+\begin{equation}
+    P(Q=i)=\sum_{j=w_{max}-i+1}^{w_{max}} P(1st\ iterm\ weight=i|weight\ of\ previous\ box=j)\cdot P(weight\ of\ previous\ box=j)
+\end{equation}
+
+Here the j should be large than $w_{max}-i+1$ in order to use a new box to package the new coming item with weight $i$.
+
+The weight of box and the weight of coming item are two independent items. The formula 8 can be further clarified with the expressions below,
+\begin{equation}
+    P(first\ iterm\ weight=i|weight\ of\ previous\ box=j)=I_{i}
+\end{equation}
+\begin{equation}
+    P(weight\ of\ previous\ box=j)=\pi_j
+\end{equation}
+    
+where the $P_{ij}$ is the transition probability of different weight of box i,j in the transition matrix P and $p_j$ is the probability of final weight of a box being j.
+
+Combining the formulas 7,8,9, we have the following probability mass function of first item weight i,
+
+\begin{equation}
+\begin{aligned}
+P(Q=i)&=\sum_{j=w_{max}-i+1}^{w_{max}} P(1st\ iterm\ weight=i|weight\ of\ previous\ box=j)\cdot P(weight\ of\ previous\ box=j)\\
+&=\sum_{j=w_{max}-i+1}^{w_{max}}I_{i}\cdot \pi_j
+\end{aligned}
+\end{equation}
+
+The relative probability of the first items with different weights is then,
+
+\begin{equation}
+    P(Q=i)=\frac{\sum_{j=w_{max}-i+1}^{w_{max}}I_{i}\cdot \pi_j}{\sum_{i=1}^{w_{max}}\sum_{j=w_{max}-i+1}^{w_{max}}I_{i}\cdot \pi_j}
+\end{equation}
+
+\subsection{Simulation}
+\subsubsection{Simulation result}
+Using the code in Referee 1.5.1, we can calculate long term average of item count, box weight, and first item weight in 100k,500k,1000k steps simulation, which separately represents the packaging of 100k, 500k and 1000k items.
+
+\bigskip
+The following are results for simulation of 100k, 500k and 1000k items.
+\begin{lstlisting}
+> source('BS.R')
+> Item_Box_Simulation(100000)
+$Box_final_Weight
+[1] 7.931628
+
+$Box_Item_Number
+[1] 1.1301
+
+$First_Item_Weight_Probobaility
+ [1] 0.004486535 0.017030750 0.036027891 0.059364652 0.082215467 0.109473708 0.136946670 0.160012205
+ [9] 0.186660187 0.207781934
+
+> Item_Box_Simulation(500000)
+$Box_final_Weight
+[1] 7.929076
+
+$Box_Item_Number
+[1] 1.131773
+
+$First_Item_Weight_Probobaility
+ [1] 0.004518035 0.017024118 0.035462951 0.058225155 0.084264971 0.110965741 0.137958509 0.160614326
+ [9] 0.184639587 0.206326607
+
+> Item_Box_Simulation(1000000)
+$Box_final_Weight
+[1] 7.928084
+
+$Box_Item_Number
+[1] 1.132108
+
+$First_Item_Weight_Probobaility
+ [1] 0.004741268 0.017198984 0.035708949 0.058954521 0.083682023 0.110335240 0.136964683 0.161583502
+ [9] 0.184244907 0.206585925
+\end{lstlisting}
+
+\subsubsection{Analytical result}
+With our above formulaes, we calculate the relative properties on the Markov Chain, the average of final box weight, the average number of items in a box and the probability distribution of first item weight.
+
+\begin{lstlisting}
+> source('mathproba.R')
+> Box_Final_Weight_Average
+[1] 7.927308
+> ITEM_NUM
+[1] 1.132473
+> first_item_probability
+          1           2           3           4           5           6           7           8           9 
+0.004650895 0.017247546 0.035881214 0.058755486 0.084176755 0.110598922 0.136706700 0.161525751 0.184552633 
+         10 
+0.205904098 
+\end{lstlisting}
+
+In conclusion, our predicted values fit the simulated value very well.
+
+\subsection{Referee}
+\subsubsection{Simulation of Packaging Items}
+\begin{lstlisting}
+isGoodNumber<-function(X,n){
+  ifelse(X==n, TRUE, FALSE)
+}
+
+stat<-function(X,n){
+	t=list()
+	len=length(X)
+	for (i in 1:n){
+		t[i]=length(X[isGoodNumber(X,i)])/len
+	}
+	return(t)
+}
+stat1<-function(X,n){
+	t=rep(1,n)
+	X=X[!is.na(X)]
+	len=length(X)
+	for (i in 1:n){
+		t[i]=length(X[isGoodNumber(X,i)])/len
+	}
+	return(t)
+}
+
+Item_Box_Simulation<-function(n){ 
+	c=1/(sum(1:10)/10)
+	p=0.1*c*(1:10)
+	wt_max=10
+
+	itm_wt=sample(x=1:10,size=1,prob=p)
+	bx_cnt=c(1,rep(NA,n-1))
+	bx_crnt_wt=c(itm_wt,rep(0,n-1))
+	bx_fnl_wt=rep(NA,n)
+	bx_itm_num=rep(NA,n)
+	frst_itm_wt=c(itm_wt,rep(NA,n))
+	count=2
+	itm_num=1
+	while(count<=n){
+		itm_wt=sample(x=1:10,size=1,prob=p)
+		if ((itm_wt+bx_crnt_wt[count-1])>wt_max){
+			bx_cnt[count]=1
+			bx_crnt_wt[count]=itm_wt
+			bx_fnl_wt[count-1]=bx_crnt_wt[count-1]
+			bx_itm_num[count-1]=itm_num
+			itm_num=1
+			frst_itm_wt[count]=itm_wt
+		}
+		else{
+			bx_crnt_wt[count]=itm_wt+bx_crnt_wt[count-1]
+			itm_num=itm_num+1
+		}
+		count=count+1
+	}
+	cwt_sta_dis=stat(bx_crnt_wt,10)
+	fwd_sta_dis=stat1(bx_fnl_wt,10)
+	fiw_sta_dis=stat1(frst_itm_wt,10)
+	bx_fnl_wt_av=mean(bx_fnl_wt,na.rm=T)
+	bx_itm_num_av=mean(bx_itm_num,na.rm=T)
+	frst_itm_wt_av=mean(frst_itm_wt,na.rm=T)
+
+	#t<-list('current_weight_distribution'=cwt_sta_dis,'final_weight_distribution'=fwd_sta_dis,'First_Item_Weight'=fiw_sta_dis)
+	t<-list('Box_final_Weight'=bx_fnl_wt_av,'Box_Item_Number'=bx_itm_num_av,'First_Item_Weight_Probobaility'=fiw_sta_dis)
+	#t=list()
+	#t['current_weight_distribution']=cwt_sta_dis
+	#t['final_weight_distribution']=fwd_sta_dis
+	#return(list(Box_Weight_Average=bx_fnl_wt_av,Box_Item_Number=bx_itm_num_av,First_Item_Weight=frst_itm_wt_av))
+	return(t)
+}
+\end{lstlisting}
+
+\subsubsection{Analytically Computed Values}
+\begin{lstlisting}
+############ ITEM WEIGHT & PROBABILITY ############
+I<-c(1:10)/10*10/55
+SUM<-sum(I)
+#I<-c(1:10)
+W_I<-c(1:10)*1.0
+W_I_av<-sum(I*W_I)
+
+################ TRANSITION MATRIX ################
+pijdef<-function(I){
+	n<-length(I)
+	p<-diag(0,n)
+	for (i in 1:n){
+		for (j in 1:n){
+			if (i>j){
+				if ((i+j)>n) p[i,j]<-0+I[j]
+				else p[i,j]<-0
+			}
+			if (i<j){
+				if ((i+j)>n) p[i,j]<-I[j-i]+I[j]
+				else p[i,j]<-I[j-i]
+			}
+			if (i==j & (i+j)>n) p[i,j]<-I[j]
+		}
+	}
+	return(p)
+}
+
+P<-pijdef(I)
+
+#################   MARKOV CHAIN  #################
+fsd<-function(p) {
+	n<-nrow(p)
+	nwmtrx<-diag(n)-t(p)
+	nwmtrx[n,]<-rep(1,n)
+	rt<-c(rep(0,n-1),1)
+	sol<-solve(nwmtrx,rt)
+	return(sol)
+}
+
+PI<-fsd(P)
+
+############# BOX WEIGHT & PROBABILITY ############
+###### BOX PROBABILITY ######
+P_box<-function(I,PI){
+	n<-length(I)
+	pbox=rep(1,length(I))
+	for (i in 1:n){
+		tot<-sum(I[(n-i+1):n])
+		pbox[i]<-PI[i]*tot
+	}
+	return(pbox)
+}
+
+pbox<-P_box(I,PI)
+pbox<-pbox/sum(pbox)
+
+######## BOX WEIGHT ########
+W_B<-c(1:length(I))*1.0
+Box_Final_Weight_Average<-sum(pbox*W_B)
+
+####### BOX ITEM NUM #######
+ITEM_NUM<-Box_Final_Weight_Average/W_I_av
+
+###### FIRST ITEM NUM ######
+P_first_weight_item<-function(PI,I){
+	n<-length(I)
+	pfirstitem<-rep(1,n)
+	for (i in 1:n){
+		tot1<-0
+		for (j in (n-i+1):n){
+			tot1<-tot1+PI[j]*I[i]		
+		}
+		pfirstitem[i]<-tot1
+	}
+	return(pfirstitem)
+}
+
+first_item_probability<-P_first_weight_item(PI,I)
+first_item_probability<-first_item_probability/sum(first_item_probability)
+names(first_item_probability)<-c(1:length(I))
+Weight_First_Item_average<-sum(first_item_probability*W_I)
+\end{lstlisting}
+\end{document}
