@@ -25,7 +25,9 @@ getHittingTime.DFmc = function(i=NULL, j=NULL, mc.obj){
 
 
 getHittingTime.DImc = function(i=NULL, j=NULL, mc.obj){
-  a = getStationaryDistribution(mc.obj, epsilon = 0.01, iteration=10)
+  a = getStationaryDistribution(mc.obj)
+  if(a[[1]]=="Fail")
+    stop("ERROR: could not find a converging stationary distribution")
   p = a[[4]]
   n = nrow(p)
   mat = matrix(-999, nrow=n, ncol=n)

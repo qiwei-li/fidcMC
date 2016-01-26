@@ -45,7 +45,8 @@ markovchain CRAN package
 ## The function is currently defined as
 #define the Markov chain
 statesNames=c("a","b","c")
-mcB<-mc.create(matrix(c(0.2,0.5,0.3,0,0.2,0.8,0.1,0.8,0.1),nrow=3, byrow=TRUE, dimnames=list(statesNames,statesNames)), discrete = TRUE,infinite = FALSE)
+mcB<-mc.create(matrix(c(0.2,0.5,0.3,0,0.2,0.8,0.1,0.8,0.1),nrow=3, byrow=TRUE, 
+	dimnames=list(statesNames,statesNames)), discrete = TRUE,infinite = FALSE)
 outs<-generateMarkovchain(n=20,mcB)
 }
 

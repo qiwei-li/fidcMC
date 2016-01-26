@@ -46,6 +46,7 @@ Yalamanchi SB, Spedicato GA (2015). Bayesian Inference of First Order Markov Cha
 sequence<-c("a", "b", "a", "a", "a", "a", "b", "a", "b", "a", "b", "a", "a",
     "b", "b", "b", "a")
 mcFitMLE<-fitDiscreteMarkovchain(data_seq=sequence)
-mcFitBSP<-fitDiscreteMarkovchain(data_seq=sequence,method="bootstrap",nboot=5, name="Bootstrap Mc")
+mcFitBSP<-fitDiscreteMarkovchain(data_seq=sequence,method="bootstrap",
+	nboot=5, name="Bootstrap Mc")
 
 }

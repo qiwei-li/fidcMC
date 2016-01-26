@@ -1,5 +1,5 @@
 # tests
-library(infiniteMC)
+library(fidcMC)
 # testing for discrete finite case
 threeHeads = function(){
   p = matrix(0, nrow=3, ncol=3)
@@ -19,6 +19,8 @@ if(length(which((as.numeric(ans)!=c(NA,1.5,1.0,2.0,NA,3.0,6.0,4.0,NA))==TRUE)))
 
 # testing for discrete infinite case
 singleServer = function(i,j){
+  if(i==1 && j==2)
+    return(1)
   p = 0.3
   q = 0.7
   r = 0
@@ -32,10 +34,10 @@ singleServer = function(i,j){
 }
 ex = mc.create(pijdef=singleServer, discrete=TRUE, infinite=TRUE)
 ans = getStationaryDistribution(ex)
-if(sum(round(ans[[3]][1:5],4) != c(0.0297,0.0424,0.0479,0.0502,0.0512)))
+if(sum(round(ans[[3]][1:5],4) != c(0.2857,0.4082,0.1749,0.0750,0.0321)))
    stop("DI method is wrong")
 ans = getHittingTime(mc.obj = ex)
-if(sum(round(ans[1, 2:5], 4) != c(1.0000, 1.6456, 2.0345, 2.2555)))
+if(sum(round(ans[1, 2:3],3) != c(1.000,6.667)))
   stop("DI method is wrong")
 
 # testing for continuous finite case

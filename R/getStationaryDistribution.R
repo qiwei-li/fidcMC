@@ -1,8 +1,8 @@
-getStationaryDistribution = function(mc.obj, epsilon = 0.01, iteration=10){
+getStationaryDistribution = function(mc.obj, epsilon = 0.01, iteration=30, totalProb=0.9){
   UseMethod("getStationaryDistribution", mc.obj)
 }
 
-getStationaryDistribution.DFmc = function(mc.obj, epsilon = 0.01, iteration=10){
+getStationaryDistribution.DFmc = function(mc.obj, epsilon = 0.01, iteration=30, totalProb=0.9){
   p = mc.obj$pijdef
   n = nrow(p)
   imp = diag(n) - t(p)
@@ -13,7 +13,7 @@ getStationaryDistribution.DFmc = function(mc.obj, epsilon = 0.01, iteration=10){
   return(PI)
 }
 
-getStationaryDistribution.DImc = function(mc.obj, epsilon = 0.01, iteration=10){
+getStationaryDistribution.DImc = function(mc.obj, epsilon = 0.01, iteration=30, totalProb=0.9){
   currentTry = 1
   k1=10
   k2=20
@@ -29,12 +29,15 @@ getStationaryDistribution.DImc = function(mc.obj, epsilon = 0.01, iteration=10){
   imp2[n2, ] = rep(1, n2)
   rhs2 = c(rep(0, n2-1), 1)
   ans2 = solve(imp2, rhs2)
-  cosineDiff = 1-cosine(ans1, ans2[1:k1])
+  cos = cosine(ans1, ans2[1:k1])
+  sumProb = sum(ans2)
   
-  while(cosineDiff > epsilon){
+  while(cos < (1-epsilon) || cos > (1+epsilon) || sumProb < totalProb){
     currentTry = currentTry+1
+    print(paste0(currentTry, "th try. cos is:", round(cos,3), " Trying approximation with ", k1, " stages."))
     if(currentTry > iteration){
-      return(list("Fail", paste0("Failed converage after ", iteration, " iterations")))
+      print(paste0("Failed converage after ", iteration, " iterations"))
+      return(list("Fail", k2, ans2, p2))
     }
     k1 = k1+20
     k2 = k2+20
@@ -50,12 +53,14 @@ getStationaryDistribution.DImc = function(mc.obj, epsilon = 0.01, iteration=10){
     imp2[n2, ] = rep(1, n2)
     rhs2 = c(rep(0, n2-1), 1)
     ans2 = solve(imp2, rhs2)
-    cosineDiff = 1-cosine(ans1, ans2[1:k1])
+    cos = cosine(ans1, ans2[1:k1])
+    sumProb = sum(ans2)
   }
-  return(list("Success",  k2, ans2, p2))
+  print(paste0("Succeeded converage after ", currentTry, " iterations."))
+  return(list("Success", k2, ans2, p2))
 }
 
-getStationaryDistribution.CFmc = function(mc.obj, epsilon = 0.01, iteration=10){
+getStationaryDistribution.CFmc = function(mc.obj, epsilon = 0.01, iteration=30, totalProb=0.9){
   p = mc.obj$pijdef
   lamda = mc.obj$qidef
   q = getInfinitesimalGenerator(p, lamda)
@@ -66,6 +71,6 @@ getStationaryDistribution.CFmc = function(mc.obj, epsilon = 0.01, iteration=10){
   return(pi)
 }
 
-getStationaryDistribution.CImc = function(mc.obj, epsilon = 0.01, iteration=10){
+getStationaryDistribution.CImc = function(mc.obj, epsilon = 0.01, iteration=30, totalProb=0.9){
   
 }

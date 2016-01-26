@@ -15,6 +15,8 @@ returns the submatrix of the hitting time matrix
 }
 \examples{
 singleServer = function(i,j){
+  if(i==1 && j==2)
+    return(1)
   p = 0.3
   q = 0.7
   r = 0

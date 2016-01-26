@@ -24,6 +24,7 @@ markovchain CRAN package
 }
 \examples{
 statesNames=c("a","b","c")
-mcB<-mc.create(matrix(c(0.2,0.5,0.3,0,0.2,0.8,0.1,0.8,0.1),nrow=3, byrow=TRUE, dimnames=list(statesNames,statesNames)), discrete = TRUE, infinite = FALSE)
-check.accessible(mcB,"a","c")
+markovB<-mc.create(matrix(c(0.2,0.5,0.3,0,0.2,0.8,0.1,0.8,0.1),nrow=3, byrow=TRUE, 
+	dimnames=list(statesNames,statesNames)), discrete = TRUE, infinite = FALSE)
+check.accessible(markovB,"a","c")
 }
