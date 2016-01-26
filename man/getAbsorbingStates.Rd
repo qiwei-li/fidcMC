@@ -1,5 +1,5 @@
 \name{getAbsorbingStates}
-\alias{getRecurrentClasses}
+\alias{getAbsorbingStates}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 Get Absorbing States of Markov chain
@@ -25,10 +25,6 @@ markovchain CRAN package
 ## The function is currently defined as
 statesNames=c("a","b","c")
 markovB<-mc.create(matrix(c(0.2,0.5,0.3,
-                       0,1,0,0.1,0.8,0.1),nrow=3, byrow=TRUE, dimnames=list               (statesNames,statesNames)
-                     ), discrete=TRUE, infinite=FALSE)
+                       0,1,0,0.1,0.8,0.1),nrow=3, byrow=TRUE, dimnames=list(statesNames,statesNames)), discrete=TRUE, infinite=FALSE)
 getAbsorbingStates(markovB)
-
-
-getRecurrentClasses(markovB)
 }

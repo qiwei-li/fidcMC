@@ -17,13 +17,11 @@ getTransientStates(mc)
 \value{
 vector of characters for state names
 }
-}
 \references{
 %% ~put references to the literature/web site here ~
 markovchain CRAN package
 }
 
-}
 \examples{
 ## The function is currently defined as
 statesNames=c("a","b","c")

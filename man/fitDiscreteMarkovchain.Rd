@@ -29,9 +29,6 @@ A character list
 \item{confidencelevel}{level for conficence intervals width. Used only when method equal to "mle".}
 \item{hyperparam}{Hyperparameter matrix for the a priori distribution. If none is provided, default value of 1 is assigned to each parameter. This must be of size kxk where k is the number of states in the chain and the values should typically be non-negative integers.}
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
 \value{
 A list containing an estimate, log-likelihood, and, when "bootstrap" method is used, a matrix of standards deviations and the bootstrap samples. When the "mle", "bootstrap" or "map" method is used, the lower and upper confidence bounds are returned along with the standard error. The "map" method also returns the expected value of the parameters with respect to the posterior distribution.
 }
