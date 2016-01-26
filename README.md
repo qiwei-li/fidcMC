@@ -1,13 +1,13 @@
-# infiniteMC
+# fidcMC
 R package for analyzing DTMC (discrete-time Markov chain) and CTMC (continuous-time Markov chain) in both finite and infinite stage settings
 
 ###To install
-In command line: **R CMD INSTALL infiniteMC**
+In command line: **R CMD INSTALL fidcMC**
 
-infiniteMC should be the path to the "infiniteMC" folder
+infiniteMC should be the path to the "fidcMC" folder
 
 ###To load
-In R: **library(infiniteMC)**
+In R: **library(fidcMC)**
 
 #License
 The MIT License (MIT)
