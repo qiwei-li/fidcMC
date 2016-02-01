@@ -1,4 +1,4 @@
-mc.create = function(pijdef, stateNames=NULL, chainName=NULL, qidef=NULL, discrete, infinite){
+mc.create = function(pijdef, stateNames=NULL, chainName=NULL, qidef=NULL, discrete, infinite, use_ratematrix=NULL){
   if(discrete==TRUE & infinite==FALSE){
     if(class(pijdef)!="matrix")
       stop("ERROR: pijdef needs to be a matrix")
@@ -26,19 +26,28 @@ mc.create = function(pijdef, stateNames=NULL, chainName=NULL, qidef=NULL, discre
   }
 
   if(discrete==FALSE & infinite==FALSE){
-    if(class(pijdef)!="matrix")
-      stop("ERROR: pijdef needs to be a matrix")
-    if(nrow(pijdef) != ncol(pijdef))
-      stop("ERROR: pijdef needs to be a square matrix")
-    if(sum(pijdef<0))
-      stop("ERROR: pijdef needs to contain values >= 0")
-    if(sum(pijdef>1))
-      stop("ERROR: pijdef needs to contain values <= 1")
-    if(class(qidef)!="numeric" & class(qidef)!="integer")
-      stop("ERROR: qidef needs to be a numerical vector")
-    if(nrow(pijdef) != length(qidef))
-      stop("ERROR: numbers of stages from pijdef and qijdef need to agree")
-    if(is.null(stateNames)){
+   if(is.null(use_ratematrix) || use_ratematrix==FALSE){
+      if(class(pijdef)!="matrix")
+        stop("ERROR: pijdef needs to be a matrix")
+      if(nrow(pijdef) != ncol(pijdef))
+        stop("ERROR: pijdef needs to be a square matrix")
+      if(sum(pijdef<0))
+        stop("ERROR: pijdef needs to contain values >= 0")
+      if(sum(pijdef>1))
+        stop("ERROR: pijdef needs to contain values <= 1")
+      if(class(qidef)!="numeric" & class(qidef)!="integer")
+        stop("ERROR: qidef needs to be a numerical vector")
+      if(nrow(pijdef) != length(qidef))
+        stop("ERROR: numbers of stages from pijdef and qijdef need to agree")
+   }
+    else{
+      if(class(pijdef)!="matrix")
+        stop("ERROR: pijdef needs to be a rate matrix")
+      if(nrow(pijdef) != ncol(pijdef))
+        stop("ERROR: pijdef needs to be a square matrix")
+      qidef = NULL
+    }
+     if(is.null(stateNames)){
       if(is.null(dimnames(pijdef)))
         stateNames = as.character(c(1:nrow(pijdef)))
       else

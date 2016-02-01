@@ -63,11 +63,19 @@ getStationaryDistribution.DImc = function(mc.obj, epsilon = 0.01, iteration=30, 
 getStationaryDistribution.CFmc = function(mc.obj, epsilon = 0.01, iteration=30, totalProb=0.9){
   p = mc.obj$pijdef
   lamda = mc.obj$qidef
-  q = getInfinitesimalGenerator(p, lamda)
-  n = nrow(q)
-  q[n, ] = rep(1, n)
-  rhs = c(rep(0, n-1), 1)
-  pi = solve(q, rhs)
+  if(!is.null(lamda)){
+    q = getInfinitesimalGenerator(p, lamda)
+    n = nrow(q)
+    q[n, ] = rep(1, n)
+    rhs = c(rep(0, n-1), 1)
+    pi = solve(q, rhs)
+  }
+  else{
+    n = nrow(p)
+    p[n, ] = rep(1, n)
+    rhs = c(rep(0, n-1), 1)
+    pi = solve(p, rhs)
+  }
   return(pi)
 }
 
