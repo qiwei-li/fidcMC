@@ -3,7 +3,7 @@
 \title{mc.create}
 \description{Create an appropriate markov chain object}
 \usage{
-mc.create(pijdef, stateNames=NULL, chainName=NULL, qidef=NULL, discrete, infinite)
+mc.create(pijdef, stateNames=NULL, chainName=NULL, qidef=NULL, discrete, infinite, use_ratematrix)
 }
 \arguments{
 \item{pijdef}{Transition matrix definition. Can be a matrix or a function with input(i,j) and output P(i to j).}
@@ -12,6 +12,7 @@ mc.create(pijdef, stateNames=NULL, chainName=NULL, qidef=NULL, discrete, infinit
 \item{qidef}{A vector of holding time distribution parameters. Must have for continuous markov chain.}
 \item{discrete}{A logical value indicating if the markov chain is discrete (FALSE means continuous).}
 \item{infinite}{A logical value indicating if the markov chain is infinite (FALSE means finite).}
+\item{use_ratematrix}{If you wish to solve the problem with a matrix.}
 }
 \value{
 returns an appropriate markov chain object

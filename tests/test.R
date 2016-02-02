@@ -56,6 +56,24 @@ if(sum(round(ans,3) != c(0.071,0.361,0.568)))
 
 
 # testing for continuous infinite case
-
+singleServer = function(i,j){
+  if(i==1 && j==2)
+    return(1)
+  p = 0.3
+  q = 0.7
+  r = 0
+  if(j == i+1)
+    return(p)
+  if(j == i-1)
+    return(q)
+  if(j==i)
+    return(r)
+  return(0)
+}
+qidef = function(i,j){return(1)}
+ex = mc.create(pijdef=singleServer, qidef = qidef, discrete=FALSE, infinite=TRUE)
+ans = getStationaryDistribution(ex)
+if(sum(round(ans[[3]][1:5],4) != c(0.2857,0.4082,0.1749,0.0750,0.0321)))
+  stop("DI method is wrong")
 
 

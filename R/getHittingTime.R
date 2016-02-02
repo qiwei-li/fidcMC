@@ -48,10 +48,10 @@ getHittingTime.DImc = function(i=NULL, j=NULL, mc.obj){
 
 
 getHittingTime.CFmc = function(i=NULL, j=NULL, mc.obj){
-  
+  print("under construction")
 }
   
 
 getHittingTime.CImc = function(i=NULL, j=NULL, mc.obj){
-  
+  print("under construction")
 }
