@@ -3,7 +3,9 @@ R package for analyzing DTMC (discrete-time Markov chain) and CTMC (continuous-t
 
 ###Usage
 library("devtools")
+
 install_github("qiwei-li/fidcMC")
+
 library("fidcMC")
 
 
