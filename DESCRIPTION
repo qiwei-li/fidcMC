@@ -2,7 +2,7 @@ Package: fidcMC
 Title: Finite and Infinite, Discrete and Continuous markov chain toolkit
 Description: This package includes toolkits for analyzing DTMC (discrete-time Markov chain) and CTMC
     (continuous-time Markov chain) in both finite and infinite stage settings.
-Version: 0.1
+Version: 0.2
 License: MIT + file LICENSE
 Author: Bingxi Li, Qiwei Li, Jiaping Zhang
 Maintainer: Qiwei Li  <qwli@ucdavis.edu>
