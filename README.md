@@ -1,19 +1,16 @@
 # fidcMC
 R package for analyzing DTMC (discrete-time Markov chain) and CTMC (continuous-time Markov chain) in both finite and infinite stage settings
 
-###Usage
+##Usage
+```r
 library("devtools")
 
 install_github("qiwei-li/fidcMC")
 
 library("fidcMC")
+```
 
-
-#License
-The MIT License (MIT)
-
-Copyright (c) 2016 Qiwei Li
-
+##License
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
